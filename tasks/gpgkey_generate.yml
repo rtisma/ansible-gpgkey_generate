@@ -3,9 +3,12 @@
   ansible.builtin.command: "cat /proc/sys/kernel/random/entropy_avail"
   changed_when: false
   register: entropy
+  when: ansible_os_family != 'Darwin'
+
 - name: Entropy state
   ansible.builtin.debug:
     var: entropy
+  when: ansible_os_family != 'Darwin'
 
 - name: Debian | Update cache
   ansible.builtin.apt:
@@ -73,9 +76,12 @@
   ansible.builtin.command: "cat /proc/sys/kernel/random/entropy_avail"
   changed_when: false
   register: entropy2
+  when: ansible_os_family != 'Darwin'
+
 - name: Entropy state
   ansible.builtin.debug:
     var: entropy2
+  when: ansible_os_family != 'Darwin'
 
 - name: Ensure .gnupg config directory exists with right permissions
   ansible.builtin.file:
